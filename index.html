@@ -28,10 +28,10 @@
     button { min-height:2.7rem; margin-top:.65rem; padding:.55rem .9rem; color:#fff; background:var(--ink); border:0; border-radius:8px; font:inherit; font-weight:650; cursor:pointer; }
     button:hover { background:#27564d; }
     button.secondary { color:var(--ink); background:#e9eee8; }
-    .player-list { display:grid; gap:.8rem; margin-top:1rem; }
-    .track { padding:.85rem; background:#f7f8f4; border:1px solid var(--line); border-radius:10px; }
-    .track audio { display:block; width:100%; margin-top:.45rem; }
-    .track-title { font-weight:650; overflow-wrap:anywhere; }
+    .player-list { display:grid; gap:1rem; margin-top:1rem; }
+    .track { padding:1.1rem; background:#f7f8f4; border:1px solid var(--line); border-radius:10px; }
+    .track audio { display:block; width:100%; min-height:64px; margin-top:.65rem; }
+    .track-title { font-size:1.1rem; font-weight:650; overflow-wrap:anywhere; }
     .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:1rem; }
     .media-card { min-width:0; padding:1rem; border:1px solid var(--line); border-radius:10px; background:#fbfcf9; }
     .media-card h3 { margin:.1rem 0 .6rem; font-size:1rem; }
@@ -51,7 +51,6 @@
   </header>
   <main>
     <p class="intro">Healing through music and therapeutic touch, nurturing your inner harmony. Rooted in compassion, creativity, and community.</p>
-
     <details open>
       <summary>Music &amp; MP3 player</summary>
       <div class="content">
@@ -62,7 +61,6 @@
         <div id="playerList" class="player-list"></div>
       </div>
     </details>
-
     <details>
       <summary>Videos</summary>
       <div class="content">
@@ -87,7 +85,6 @@
         </div>
       </div>
     </details>
-
     <details>
       <summary>Apple Music</summary>
       <div class="content">
