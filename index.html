@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#183b35">
+  <meta name="description" content="RenéeKing.co — healing through music and therapeutic bodywork.">
+  <title>RenéeKing.co — Music &amp; Healing</title>
+  <style>
+    :root { color-scheme: light; --ink:#183b35; --muted:#65736d; --paper:#f6f5ef; --card:#fff; --line:#dfe4dc; --accent:#b36f50; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif; }
+    header { padding:clamp(2rem,7vw,5rem) 1.25rem; text-align:center; background:linear-gradient(145deg,#e6eee6,#f6f5ef 70%); }
+    header h1 { margin:0; font-family:Georgia,serif; font-size:clamp(2.4rem,8vw,4.6rem); font-weight:500; letter-spacing:.02em; }
+    header p { max-width:42rem; margin:1rem auto 0; color:var(--muted); }
+    main { width:min(900px, calc(100% - 2rem)); margin:2rem auto 4rem; }
+    .intro { margin:0 auto 1.5rem; max-width:62ch; text-align:center; }
+    details { margin:1rem 0; overflow:hidden; background:var(--card); border:1px solid var(--line); border-radius:14px; box-shadow:0 6px 24px #183b3508; }
+    summary { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:1.15rem 1.25rem; cursor:pointer; font-weight:700; list-style:none; }
+    summary::-webkit-details-marker { display:none; }
+    summary::after { content:'+'; color:var(--accent); font-size:1.5rem; line-height:1; }
+    details[open] summary::after { content:'−'; }
+    .content { padding:0 1.25rem 1.35rem; }
+    .content p:first-child { margin-top:.15rem; }
+    label { display:block; margin:.9rem 0 .35rem; font-weight:650; }
+    input[type=url], input[type=text], input[type=file] { width:100%; min-height:2.8rem; padding:.65rem .75rem; border:1px solid #c9d2ca; border-radius:8px; background:#fff; color:var(--ink); font:inherit; }
+    input[type=file] { padding:.5rem; }
+    button { min-height:2.7rem; margin-top:.65rem; padding:.55rem .9rem; color:#fff; background:var(--ink); border:0; border-radius:8px; font:inherit; font-weight:650; cursor:pointer; }
+    button:hover { background:#27564d; }
+    button.secondary { color:var(--ink); background:#e9eee8; }
+    .player-list { display:grid; gap:.8rem; margin-top:1rem; }
+    .track { padding:.85rem; background:#f7f8f4; border:1px solid var(--line); border-radius:10px; }
+    .track audio { display:block; width:100%; margin-top:.45rem; }
+    .track-title { font-weight:650; overflow-wrap:anywhere; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:1rem; }
+    .media-card { min-width:0; padding:1rem; border:1px solid var(--line); border-radius:10px; background:#fbfcf9; }
+    .media-card h3 { margin:.1rem 0 .6rem; font-size:1rem; }
+    .embed { width:100%; aspect-ratio:16/9; margin-top:.8rem; overflow:hidden; border:0; border-radius:8px; background:#edf0eb; }
+    .embed iframe { display:block; width:100%; height:100%; border:0; }
+    .hint, .status { color:var(--muted); font-size:.9rem; }
+    .status { min-height:1.4em; }
+    footer { padding:1.5rem; color:var(--muted); text-align:center; font-size:.9rem; }
+    a { color:#315d52; }
+    :focus-visible { outline:3px solid #b36f50; outline-offset:3px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>RenéeKing.co</h1>
+    <p>Intuitively connecting through the power of sound and therapeutic bodywork.</p>
+  </header>
+  <main>
+    <p class="intro">Healing through music and therapeutic touch, nurturing your inner harmony. Rooted in compassion, creativity, and community.</p>
+
+    <details open>
+      <summary>Music &amp; MP3 player</summary>
+      <div class="content">
+        <p>Add audio files from your device to play them here. The selected files stay in this browser session; upload them to your website hosting to make them available to everyone.</p>
+        <label for="audioFiles">Choose MP3 or other audio files</label>
+        <input id="audioFiles" type="file" accept="audio/*,.mp3,.m4a,.wav,.ogg" multiple>
+        <div id="audioStatus" class="status" role="status" aria-live="polite"></div>
+        <div id="playerList" class="player-list"></div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Videos</summary>
+      <div class="content">
+        <p>Paste a public video link in either slot, then select Add video. YouTube links and Facebook video or Reel links are supported.</p>
+        <div class="grid">
+          <section class="media-card" aria-labelledby="youtubeHeading">
+            <h3 id="youtubeHeading">YouTube video</h3>
+            <label for="youtubeUrl">YouTube link</label>
+            <input id="youtubeUrl" type="url" placeholder="https://www.youtube.com/watch?v=..." autocomplete="url">
+            <button type="button" data-action="youtube">Add YouTube video</button>
+            <div class="embed" id="youtubeEmbed" aria-label="YouTube video preview"></div>
+            <p class="status" id="youtubeStatus" role="status" aria-live="polite"></p>
+          </section>
+          <section class="media-card" aria-labelledby="facebookHeading">
+            <h3 id="facebookHeading">Facebook video</h3>
+            <label for="facebookUrl">Facebook video link</label>
+            <input id="facebookUrl" type="url" placeholder="https://www.facebook.com/.../videos/..." autocomplete="url">
+            <button type="button" data-action="facebook">Add Facebook video</button>
+            <div class="embed" id="facebookEmbed" aria-label="Facebook video preview"></div>
+            <p class="status" id="facebookStatus" role="status" aria-live="polite"></p>
+          </section>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Apple Music</summary>
+      <div class="content">
+        <p>Paste a public Apple Music song, album, playlist, or music video link.</p>
+        <label for="appleUrl">Apple Music link</label>
+        <input id="appleUrl" type="url" placeholder="https://music.apple.com/..." autocomplete="url">
+        <button type="button" data-action="apple">Add Apple Music</button>
+        <div class="embed" id="appleEmbed" aria-label="Apple Music player"></div>
+        <p class="status" id="appleStatus" role="status" aria-live="polite"></p>
+      </div>
+    </details>
+  </main>
+  <footer>RenéeKing.co</footer>
+  <script>
+    const audioInput = document.querySelector('#audioFiles');
+    const playerList = document.querySelector('#playerList');
+    const audioStatus = document.querySelector('#audioStatus');
+    let activeObjectUrls = [];
+
+    audioInput.addEventListener('change', () => {
+      activeObjectUrls.forEach(URL.revokeObjectURL);
+      activeObjectUrls = [];
+      playerList.replaceChildren();
+      const files = [...audioInput.files].filter(file => file.type.startsWith('audio/') || /\.(mp3|m4a|wav|ogg)$/i.test(file.name));
+      if (!files.length) {
+        audioStatus.textContent = 'Choose one or more audio files to create the player.';
+        return;
+      }
+      files.forEach(file => {
+        const card = document.createElement('div');
+        card.className = 'track';
+        const title = document.createElement('div');
+        title.className = 'track-title';
+        title.textContent = file.name;
+        const audio = document.createElement('audio');
+        audio.controls = true;
+        audio.preload = 'metadata';
+        const src = URL.createObjectURL(file);
+        activeObjectUrls.push(src);
+        audio.src = src;
+        card.append(title, audio);
+        playerList.append(card);
+      });
+      audioStatus.textContent = `${files.length} audio file${files.length === 1 ? '' : 's'} ready to play in this browser.`;
+    });
+
+    function setEmbed(container, url, title) {
+      container.replaceChildren();
+      const frame = document.createElement('iframe');
+      frame.title = title;
+      frame.loading = 'lazy';
+      frame.referrerPolicy = 'strict-origin-when-cross-origin';
+      frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      frame.allowFullscreen = true;
+      frame.src = url;
+      container.append(frame);
+    }
+    function validUrl(input, status) {
+      try {
+        const url = new URL(input.value.trim());
+        if (url.protocol !== 'https:') throw new Error('Use an https:// link.');
+        return url;
+      } catch (error) {
+        status.textContent = error.message || 'Enter a valid public link.';
+        return null;
+      }
+    }
+    document.querySelector('[data-action="youtube"]').addEventListener('click', () => {
+      const input = document.querySelector('#youtubeUrl');
+      const status = document.querySelector('#youtubeStatus');
+      const url = validUrl(input, status);
+      if (!url) return;
+      let id = '';
+      if (url.hostname === 'youtu.be') id = url.pathname.slice(1).split('/')[0];
+      else if (['youtube.com', 'www.youtube.com', 'm.youtube.com'].includes(url.hostname)) {
+        if (url.pathname === '/watch') id = url.searchParams.get('v') || '';
+        else if (/^\/(embed|shorts)\//.test(url.pathname)) id = url.pathname.split('/')[2] || '';
+      }
+      if (!/^[\w-]{11}$/.test(id)) { status.textContent = 'That does not look like a supported YouTube video link.'; return; }
+      setEmbed(document.querySelector('#youtubeEmbed'), `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}`, 'YouTube video player');
+      status.textContent = 'YouTube player added.';
+    });
+    document.querySelector('[data-action="facebook"]').addEventListener('click', () => {
+      const input = document.querySelector('#facebookUrl');
+      const status = document.querySelector('#facebookStatus');
+      const url = validUrl(input, status);
+      if (!url) return;
+      if (!/(^|\.)facebook\.com$/.test(url.hostname) && !/(^|\.)fb\.watch$/.test(url.hostname)) {
+        status.textContent = 'Enter a Facebook or fb.watch video link.'; return;
+      }
+      const encoded = encodeURIComponent(url.href);
+      setEmbed(document.querySelector('#facebookEmbed'), `https://www.facebook.com/plugins/video.php?href=${encoded}&show_text=false`, 'Facebook video player');
+      status.textContent = 'Facebook video player added. The video must be public and embeddable.';
+    });
+    document.querySelector('[data-action="apple"]').addEventListener('click', () => {
+      const input = document.querySelector('#appleUrl');
+      const status = document.querySelector('#appleStatus');
+      const url = validUrl(input, status);
+      if (!url) return;
+      if (!/(^|\.)music\.apple\.com$/.test(url.hostname)) { status.textContent = 'Enter a link from music.apple.com.'; return; }
+      const path = url.pathname.replace(/^\//, '');
+      setEmbed(document.querySelector('#appleEmbed'), `https://embed.music.apple.com/${path}${url.search}`, 'Apple Music player');
+      status.textContent = 'Apple Music player added.';
+    });
+  </script>
+</body>
+</html>
